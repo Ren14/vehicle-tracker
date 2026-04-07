@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/Ren14/vehicle-tracker/backend/internal/ports"
@@ -10,8 +11,21 @@ import (
 )
 
 func corsMiddleware(next http.Handler) http.Handler {
+	// ALLOWED_ORIGINS can be a comma-separated list, e.g.:
+	// "https://vehicle-tracker.vercel.app,http://localhost:5174"
+	// Falls back to "*" when unset (safe for local dev).
+	allowed := os.Getenv("ALLOWED_ORIGINS")
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		origin := r.Header.Get("Origin")
+
+		if allowed == "" {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+		} else if origin != "" && strings.Contains(allowed, origin) {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Vary", "Origin")
+		}
+
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 

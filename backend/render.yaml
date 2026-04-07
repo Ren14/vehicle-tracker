@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: vehicle-tracker-api
+    env: go
+    rootDir: backend
+    buildCommand: go build -o server ./cmd/api
+    startCommand: ./server
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
