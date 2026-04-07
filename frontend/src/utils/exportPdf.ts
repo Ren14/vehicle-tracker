@@ -89,10 +89,10 @@ export function exportVehiclePdf(vehicle: Vehicle, records: MaintenanceRecord[])
     columnStyles: {
       0: { cellWidth: 22 },
       1: { cellWidth: 22 },
-      2: { cellWidth: 35 },
-      3: { cellWidth: 65 },
+      2: { cellWidth: 33 },
+      3: { cellWidth: 58 },
       4: { cellWidth: 28 },
-      5: { cellWidth: 18, halign: 'right' },
+      5: { cellWidth: 30, halign: 'right' },
     },
   })
 
