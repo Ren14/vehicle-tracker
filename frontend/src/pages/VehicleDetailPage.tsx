@@ -13,6 +13,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import BuildIcon from '@mui/icons-material/Build'
 import EventIcon from '@mui/icons-material/Event'
 import SpeedIcon from '@mui/icons-material/Speed'
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
+import { exportVehiclePdf } from '../utils/exportPdf'
 import { vehiclesApi } from '../api/vehicles'
 import type { Vehicle, MaintenanceRecord, MaintenanceRecordPayload, MaintenanceCategory } from '../types'
 import { formatDate, formatCost, formatKm, toInputDate } from '../utils/format'
@@ -228,15 +230,26 @@ export default function VehicleDetailPage() {
           </Box>
         </Box>
 
-        {/* Button — below title on mobile, right on desktop */}
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={openCreate}
-          sx={{ order: { xs: 1, md: 3 }, whiteSpace: 'nowrap', width: { xs: '100%', md: 'auto' } }}
-        >
-          Agregar registro
-        </Button>
+        {/* Buttons — below title on mobile, right on desktop */}
+        <Box sx={{ order: { xs: 1, md: 3 }, display: 'flex', gap: 1, width: { xs: '100%', md: 'auto' } }}>
+          <Button
+            variant="outlined"
+            startIcon={<PictureAsPdfIcon />}
+            onClick={() => exportVehiclePdf(vehicle, records)}
+            disabled={records.length === 0}
+            sx={{ whiteSpace: 'nowrap', flex: { xs: 1, md: 'none' } }}
+          >
+            Exportar PDF
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={openCreate}
+            sx={{ whiteSpace: 'nowrap', flex: { xs: 1, md: 'none' } }}
+          >
+            Agregar registro
+          </Button>
+        </Box>
 
         {/* Calculated alerts — centre on desktop, below button on mobile */}
         <Box sx={{
