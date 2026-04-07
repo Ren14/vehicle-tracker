@@ -1,12 +1,13 @@
 services:
   - type: web
     name: vehicle-tracker-api
-    env: go
-    rootDir: backend
-    buildCommand: go build -o server ./cmd/api
-    startCommand: ./server
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
     envVars:
       - key: DATABASE_URL
         sync: false
       - key: JWT_SECRET
+        sync: false
+      - key: ALLOWED_ORIGINS
         sync: false
